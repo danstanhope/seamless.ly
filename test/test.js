@@ -14,13 +14,3 @@ describe('SeamLess object creation', function () {
     	expect(s).toBeDefined();
     });
 });
-
-
-describe('SeamLess sendHeight', function () {
-    it('getHeight method', function () {
-
-    	s = SeamLess.config({ window : window, origin : '*', frameId : 'test-frame' });
-
-    	expect(s.getHeight()).toBeDefined();
-    });
-});
