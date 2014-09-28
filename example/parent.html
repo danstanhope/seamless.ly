@@ -23,7 +23,9 @@
       var iframe = document.getElementById('test-frame'),
         s = SeamLess.config({ window : iframe.contentWindow, origin : '*', frameId : 'test-frame' });
 
-      s.receiveHeight();
+      s.receiveHeight(function(height){
+      iframe.style.height = height + 'px';
+     });
 
       function frameload(){
         s.sendStyle(['strong', 'h4', 'p', 'a']);

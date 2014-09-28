@@ -7,12 +7,12 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     clean: {
-      test: ['build']
+      test: ['dist']
     },
     uglify: {
       prod: {
         files: {
-          'build/seamless.ly.min.js': ['src/seamless.ly.js']
+          'dist/seamless.ly.min.js': ['src/seamless.ly.js']
         }
       }
     },    
@@ -25,7 +25,11 @@ module.exports = function(grunt) {
     jasmine: {
       src : 'src/seamless.ly.js',
       options:{        
-        specs : 'test/**/*.js'
+        specs : 'spec/**/*.js',
+          vendor : [
+            'spec/libs/jquery.js',
+            'spec/libs/jasmine-jquery.js'
+          ]        
       }
     } 
   });

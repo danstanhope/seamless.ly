@@ -104,6 +104,7 @@ SeamLess = (function() {
 		message : function(callback){	
 			window[this.config.method](this.config.message,function(e) {	
 				var data = e.data;
+
 				if(typeof callback === 'function'){
 					callback.call(true, data);	
 				} 
@@ -118,7 +119,7 @@ SeamLess = (function() {
 			_events.init(params);
 			
 			s = {
-				send : function(data){
+				send : function(data){		
 					params.window.postMessage(data, params.origin);					
 				},
 				receive : function(callback){
@@ -128,19 +129,17 @@ SeamLess = (function() {
 						} 						
 					});
 				},
-				sendHeight : function(){
+				sendHeight : function(){					
 					var bodyHeight = _util.getBodyHeight();
 
 					s.send({ height : bodyHeight});
 				},
-				receiveHeight : function(){
+				receiveHeight : function(callback){
 					s.receive(function(data){
 						if(data && data.height){
-							if(params.frameId && params.frameId !== ''){
-								document.getElementById(params.frameId).style.height = data.height + 'px';
-							}else{
-								throw('Please specify your iframe id');
-							}							
+							if(typeof callback === 'function'){
+								callback.call(true, data.height);	
+							} 															
 						}						
 					});
 				},
