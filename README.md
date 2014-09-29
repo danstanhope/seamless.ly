@@ -3,7 +3,9 @@ seamless.ly
 
 Seamlessly send and receive messages between parent page and iframe. Pass styles and set height, dynamically, with ease!
 
-## Usage(found in the example folder)
+## Usage
+
+This can be found in the example folder :)
 
 ### child.html
 
