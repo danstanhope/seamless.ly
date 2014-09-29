@@ -14,9 +14,8 @@
         seamless
         src="child.html"
         style="width: 100%; border: 0px; overflow: hidden; margin-top: 10px;"
-        onload="frameload()"
         ></iframe>   
-           
+
     </article>
     <script type="text/javascript" src="../src/seamless.ly.js"></script>
 
@@ -25,10 +24,10 @@
         s = SeamLess.config({ window : iframe.contentWindow, origin : '*', frameId : 'test-frame' });
 
       s.receiveHeight(function(height){
-      iframe.style.height = height + 'px';
-     });
+        iframe.style.height = height + 'px';
+      });
 
-      function frameload(){
+      iframe.onload = function (e){
         s.sendStyle(['strong', 'h4', 'p', 'a']);
       }
     </script>
