@@ -27,6 +27,44 @@ Seamlessly send and receive messages between parent page and iframe. Pass styles
 	    </script>
 	  </body>
 	</html>
+
+### parent.html
+
+	<html>
+	  <head>
+	    <meta charset="UTF-8">
+	    <title>Parent Page</title>
+	  </head>
+	  <body>
+	    <article>
+	      <h3>Parent Page</h3>
+	      <iframe 
+	        id="test-frame" 
+	        frameborder="0"
+	        scrolling="no"
+	        seamless
+	        src="child.html"
+	        style="width: 100%; border: 0px; overflow: hidden; margin-top: 10px;"
+	        onload="frameload()"
+	        ></iframe>   
+	           
+	    </article>
+	    <script type="text/javascript" src="../src/seamless.ly.js"></script>
+
+	    <script type="text/javascript">
+	      var iframe = document.getElementById('test-frame'),
+	        s = SeamLess.config({ window : iframe.contentWindow, origin : '*', frameId : 'test-frame' });
+
+	      s.receiveHeight(function(height){
+	      iframe.style.height = height + 'px';
+	     });
+
+	      function frameload(){
+	        s.sendStyle(['strong', 'h4', 'p', 'a']);
+	      }
+	    </script>
+	  </body>
+	</html>
 	
 
 
