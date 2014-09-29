@@ -2,7 +2,7 @@
   "name": "seamless.ly",
   "version": "0.1.0",
   "scripts": {
-    "test": "./node_modules/.bin/jasmine-node spec/"
+    "test": "grunt jasmine"
   },  
   "devDependencies": {
     "grunt": "~0.4.5",
