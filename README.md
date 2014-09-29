@@ -5,7 +5,7 @@ Seamlessly send and receive messages between parent page and iframe. Pass styles
 
 ## Usage
 
-`<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
@@ -27,7 +27,7 @@ Seamlessly send and receive messages between parent page and iframe. Pass styles
         s.sendHeight();        
     </script>
   </body>
-</html>`
+</html>
 
 
 ## License
