@@ -1,5 +1,8 @@
+
 seamless.ly
 ===========
+[![Build
+Status](https://travis-ci.org/danstanhope/seamless.ly.svg?branch=master)](https://github.com/danstanhope/seamless.ly)
 
 Seamlessly send and receive messages between parent page and iframe. Pass styles and set height, dynamically, with ease!
 
