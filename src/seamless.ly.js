@@ -144,7 +144,9 @@ SeamLess = (function() {
 					});
 				},
 				sendStyle : function(elements){
-					var arr = [];
+					var arr = [],
+						frame = document.getElementById(params.frameId);
+
 					if(elements.length === 0){
 						throw('Please specify an array of DOM elements');
 					}
@@ -152,8 +154,9 @@ SeamLess = (function() {
 					for(var i = 0; i < elements.length; i++){
 						arr.push(_util.getElementStyle('p', params.frameId));
 					}					
-
-					s.send({ style : arr });
+					frame.onload = function(){
+						s.send({ style : arr });
+					};
 				},
 				receiveStyle : function(){
 					s.receive(function(data){

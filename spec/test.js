@@ -2,7 +2,7 @@
 describe('SeamLess object exists', function () {   
     it('Ensure SeamLess object exists', function () {
         var sl = window.SeamLess;
-
+        
         expect(sl).toBeDefined();
     });      
 });
