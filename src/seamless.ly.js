@@ -142,7 +142,7 @@ SeamLess = function(params) {
 	};
 	self.sendHeight = function(){
 		var bodyHeight = _util.getBodyHeight();
-console.log(bodyHeight)
+
 		self.send({ height : bodyHeight, origin : params.origin});
 	};
 	self.receiveHeight = function(callback){
