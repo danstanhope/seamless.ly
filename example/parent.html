@@ -21,15 +21,12 @@
 
     <script type="text/javascript">
       var iframe = document.getElementById('test-frame'),
-        s = SeamLess.config({ window : iframe.contentWindow, origin : '*', frameId : 'test-frame' });
+        s = new SeamLess({ window : iframe.contentWindow, origin : '*', frameId : 'test-frame' });
 
       s.receiveHeight(function(height){
         iframe.style.height = height + 'px';
       });
 
-      iframe.onload = function (e){
-        s.sendStyle(['strong', 'h4', 'p', 'a']);
-      }
     </script>
   </body>
 </html>

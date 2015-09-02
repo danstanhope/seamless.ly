@@ -16,8 +16,8 @@ describe('Send and Receive Message', function () {
         jasmine.clock().uninstall();
     });
     
-    it('Receives value sent from Send method', function(done) {
-        var s = SeamLess.config({ window : window.parent, origin : '*' });
+    it('Receives value sent from Send method', function(done) {        
+        var s = new SeamLess({ window : window.parent, origin : '*' });
 
         s.receive(function(data){
             expect(data).not.toBeNull();
@@ -28,6 +28,7 @@ describe('Send and Receive Message', function () {
             s.send('send')        
         }, 10);
         jasmine.clock().tick(11);
+
      });   
 });
 
@@ -47,8 +48,8 @@ describe('Send and Receive Height', function () {
 
         var iframe = parent.find('iframe'); 
 
-        var parent = SeamLess.config({ window : iframe.contentWindow, origin : '*' , frameId : 'test-frame' });
-        var child = SeamLess.config({ window : window.parent, origin : '*' , frameId : 'test-frame'  });
+        var parent = new SeamLess({ window : iframe.contentWindow, origin : '*' , frameId : 'test-frame' });
+        var child = new SeamLess({ window : window.parent, origin : '*' , frameId : 'test-frame'  });
 
         parent.receiveHeight(function(height){
             expect(height).toEqual(300)
@@ -60,5 +61,5 @@ describe('Send and Receive Height', function () {
         }, 10);
 
         jasmine.clock().tick(11);
-     });
+     });    
 });

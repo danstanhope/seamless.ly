@@ -14,9 +14,8 @@
     <script type="text/javascript" src="../src/seamless.ly.js"></script>
 
     <script type="text/javascript">
-        var s = SeamLess.config({ window : window.parent, origin : '*' });
+        var s = new SeamLess({ window : window.parent, origin : '*' });
 
-        s.receiveStyle();
         s.sendHeight();        
     </script>
   </body>

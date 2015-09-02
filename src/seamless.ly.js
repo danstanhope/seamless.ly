@@ -1,7 +1,8 @@
 var SeamLess = SeamLess || {};
 
-SeamLess = (function() {
-	"use strict";	
+SeamLess = function(params) {
+	"use strict";
+	var self = this;	
 
 	if(!window.postMessage){
 		throw("browser doesn't support postMessage.")
@@ -75,10 +76,26 @@ SeamLess = (function() {
 			}
 
 			head.appendChild(style);
-		}		
+		},
+		findByAttributeValue : function(attribute, value) {
+			var allElements = document.getElementsByTagName('*');
+			for (var i = 0; i < allElements.length; i++){
+				if (allElements[i].getAttribute(attribute) == value){
+					return allElements[i];
+				}
+			}
+		},
+    	isJSON : function(a){
+			try {
+				JSON.parse(a);
+			} catch (e) {
+			return false;
+			}
+			return true;
+    	}				
 	};
 
-	var _events = {
+	self._events = {
 		config :{
 			method : '',
 			message : '',
@@ -102,73 +119,67 @@ SeamLess = (function() {
 			}			
 		},
 		message : function(callback){	
-			window[this.config.method](this.config.message,function(e) {	
+			window[this.config.method](this.config.message,function(e) {
 				var data = e.data;
-
 				if(typeof callback === 'function'){
 					callback.call(true, data);	
 				} 
 			},false);			
 		}
 	};
-
-	return {
-		config : function(params){
-			var s = {};
-
-			_events.init(params);
-			
-			s = {
-				send : function(data){		
-					params.window.postMessage(data, params.origin);					
-				},
-				receive : function(callback){
-					_events.message(function(data){
-						if(typeof callback === 'function'){
-							callback.call(true, data);	
-						} 						
-					});
-				},
-				sendHeight : function(){					
-					var bodyHeight = _util.getBodyHeight();
-
-					s.send({ height : bodyHeight});
-				},
-				receiveHeight : function(callback){
-					s.receive(function(data){
-						if(data && data.height){
-							if(typeof callback === 'function'){
-								callback.call(true, data.height);	
-							} 															
-						}						
-					});
-				},
-				sendStyle : function(elements){
-					var arr = [],
-						frame = document.getElementById(params.frameId);
-
-					if(elements.length === 0){
-						throw('Please specify an array of DOM elements');
-					}
-					
-					for(var i = 0; i < elements.length; i++){
-						arr.push(_util.getElementStyle('p', params.frameId));
-					}					
-					frame.onload = function(){
-						s.send({ style : arr });
-					};
-				},
-				receiveStyle : function(){
-					s.receive(function(data){
-						if(data && data.style){
-							_util.injectStyles(data.style);
-						}						
-					});						
-				}
-			};
-
-			return s;
-		}
+	
+	self.send = function(data){
+		params.window.postMessage(JSON.stringify(data), params.origin);					
 	};
-})();	
+	self.receive = function(callback){
+		self._events.message(function(data){
+			if(typeof callback === 'function'){
+				if(!_util.isJSON(data)) return;
+
+				callback.call(true, JSON.parse(data));	
+			} 						
+		});
+	};
+	self.sendHeight = function(){
+		var bodyHeight = _util.getBodyHeight();
+console.log(bodyHeight)
+		self.send({ height : bodyHeight, origin : params.origin});
+	};
+	self.receiveHeight = function(callback){
+		self.receive(function(data){
+			if(typeof callback === 'function'){
+				callback.call(true, data.height);	
+			}else if(data && data.height){
+				if(data.contentType && data.contentType !== ''){
+					_util.findByAttributeValue('data-content-type', data.contentType).style.height = data.height + 10 + 'px';					
+				}else if(params.frameId && params.frameId !== ''){
+					document.getElementById(params.frameId).style.height = data.height + 10 + 'px';
+				}else{
+					throw('Please specify data-content-type="content-orgid-template"');
+				}							
+			}						
+		});
+	};
+	self.sendStyle = function(elements){
+		var arr = [];
+		if(elements.length === 0){
+			throw('Please specify an array of DOM elements');
+		}
+		
+		for(var i = 0; i < elements.length; i++){
+			arr.push(_util.getElementStyle('p', params.frameId));
+		}					
+
+		self.send({ style : arr });
+	};
+	self.receiveStyle = function(){
+		self.receive(function(data){
+			if(data && data.style){
+				_util.injectStyles(data.style);
+			}						
+		});						
+	};	
+
+	self._events.init(params);
+};	
 
